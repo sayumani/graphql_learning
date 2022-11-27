@@ -122,6 +122,7 @@ const Mutation = new GraphQLObjectType({
         },
       },
       resolve: (parent, args) => {
+        console.log(args);
         let book = new Book({
           name: args.name,
           genre: args.genre,

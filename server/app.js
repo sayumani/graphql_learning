@@ -2,6 +2,8 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const mongoose = require('mongoose');
+const cors = require("cors");
+const NoIntrospection = require('graphql-disable-introspection')
 
 mongoose.connect('mongodb://localhost:27023/graphql-learn');
 mongoose.connection.once('open', () => {
@@ -12,9 +14,11 @@ const app = express();
 
 app.use(
   "/graphql",
+  cors(),
   graphqlHTTP({
     schema,
-    graphiql: true
+    graphiql: true,
+    validationRules: [NoIntrospection]
   })
 );
 
