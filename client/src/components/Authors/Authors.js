@@ -8,26 +8,25 @@ import Avatar from "@mui/material/Avatar";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useQuery } from "react-apollo";
-import { getBooksQuery } from '../../queries/queries'
+import { getAuthorsQuery } from '../../queries/queries'
 
-const BookList = (props) => {
-  const { loading, data } = useQuery(getBooksQuery);
+const Authors = (props) => {
+  const { loading, data } = useQuery(getAuthorsQuery);
   console.log(data, loading)
   return (
     <div>
       <List>
         {loading
-          ? "Loading books"
-          : data.books &&
-            data.books.map((book) => {
+          ? "Loading Authors"
+          : data.authors &&
+            data.authors.map((author) => {
               return (
-                <ListItem key={book.id}>
+                <ListItem key={author.id}>
                   <ListItemAvatar>
                     <Avatar>
-                      <MenuBookIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={book.name} secondary={book.genre + ', ' + book.author?.name} />
+                  <ListItemText primary={author.name} />
                   <DeleteIcon />
                 </ListItem>
               );
@@ -37,4 +36,4 @@ const BookList = (props) => {
   );
 };
 
-export default BookList;
+export default Authors;

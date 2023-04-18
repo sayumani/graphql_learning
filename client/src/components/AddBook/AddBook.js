@@ -24,7 +24,7 @@ const AddBook = (props) => {
     authorId: "",
   });
   const { loading, data } = useQuery(getAuthorsQuery)
-  const [addAuthor, { error, data: addUserData }] = useMutation(addBookMutation, {
+  const [addBook, { error, data: addBookData }] = useMutation(addBookMutation, {
     variables: {
       name: addForm.name,
       genre: addForm.genre,
@@ -36,7 +36,7 @@ const AddBook = (props) => {
       },
     ],
   });
-  console.log({addAuthor, addUserData, error})
+  console.log({addBook, addBookData, error})
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +48,7 @@ const AddBook = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addAuthor();
+    addBook();
     setAddForm({
       name: "",
       genre: "",
