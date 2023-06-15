@@ -7,12 +7,28 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { useQuery } from "react-apollo";
-import { getAuthorsQuery } from '../../queries/queries'
+import { useQuery, useMutation } from "react-apollo";
+import { getAuthorsQuery, getBooksQuery, deleteAuthorMutation } from '../../queries/queries'
 
 const Authors = (props) => {
   const { loading, data } = useQuery(getAuthorsQuery);
   console.log(data, loading)
+
+  const [deleteAuthor, { error, data: deleteAuthorData }] = useMutation(deleteAuthorMutation, {
+    refetchQueries: [
+      {
+        query: getAuthorsQuery,
+      },
+      {
+        query: getBooksQuery,
+      },
+    ],
+  });
+
+  const onDelete = (author) => {
+    deleteAuthor({variables: {id: author.id}})
+  }
+
   return (
     <div>
       <List>
@@ -27,7 +43,7 @@ const Authors = (props) => {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText primary={author.name} />
-                  <DeleteIcon />
+                  <DeleteIcon onClick={() => onDelete(author)}/>
                 </ListItem>
               );
             })}

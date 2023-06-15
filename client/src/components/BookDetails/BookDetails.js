@@ -1,11 +1,5 @@
 import React from "react";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useLazyQuery } from "react-apollo";
 import { getBooksDetailsQuery } from "../../queries/queries";
@@ -22,9 +16,19 @@ const BookDetails = (props) => {
     },
   });
   console.log(data, loading);
+  const getBookDetail = (book) => {
+    return (
+      <div>
+
+      </div>
+    )
+  }
   return (
-    <div>
-      <List>{loading ? "Loading books" : data && data.book && <div><pre>{JSON.stringify(data, null, 2) }</pre></div>}</List>
+    <div className="addForm">
+      <List>{loading ? "Loading book details" : 
+      (data && data.book) ? 
+        <div><pre>{JSON.stringify(data, null, 2) }</pre></div> :
+        <div>Please select a book</div>}</List>
     </div>
   );
 };

@@ -122,7 +122,6 @@ const Mutation = new GraphQLObjectType({
         },
       },
       resolve: (parent, args) => {
-        console.log(args);
         let book = new Book({
           name: args.name,
           genre: args.genre,
@@ -139,7 +138,6 @@ const Mutation = new GraphQLObjectType({
         }
       },
       resolve: (parent, args) => {
-        console.log(args);
         return Book.deleteOne({_id: args.bookId})
       }
     },
@@ -150,8 +148,8 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLID),
         }
       },
-      resolve: (parent, args) => {
-        console.log(args);
+      resolve: async (parent, args) => {
+        await Book.deleteMany({authorId: args.authorId})
         return Author.deleteOne({_id: args.authorId})
       }
     }
